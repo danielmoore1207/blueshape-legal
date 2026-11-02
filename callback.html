@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TikTok login callback</title>
+    <style>
+      body { font-family: system-ui, sans-serif; max-width: 42rem; margin: 2rem auto; padding: 0 1.25rem; line-height: 1.5; }
+      code, textarea { display: block; width: 100%; word-break: break-all; }
+      textarea { min-height: 6rem; margin: 0.75rem 0; }
+    </style>
+  </head>
+  <body>
+    <h1>TikTok login</h1>
+    <p id="status">Reading the address bar…</p>
+    <textarea id="out" readonly></textarea>
+    <p>Copy that whole URL (or the code) into the tiktok-flow dashboard Connect TikTok tab.</p>
+    <script>
+      const params = new URLSearchParams(location.search);
+      const code = params.get("code");
+      const err = params.get("error") || params.get("error_description");
+      const status = document.getElementById("status");
+      const out = document.getElementById("out");
+      if (err) {
+        status.textContent = "TikTok returned an error.";
+        out.value = err;
+      } else if (code) {
+        status.textContent = "Connected. Copy this page’s address, or the code below:";
+        out.value = location.href;
+      } else {
+        status.textContent = "No code in the URL yet. This page is only for the TikTok redirect.";
+        out.value = location.href;
+      }
+    </script>
+  </body>
+</html>
